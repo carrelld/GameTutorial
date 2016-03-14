@@ -18,6 +18,8 @@ public class Handler {
 //		for(GameObject tempObject : object){
 //			tempObject.tick();
 //		}
+		
+		// test comment
 	}
 	
 	public void render(Graphics g){
