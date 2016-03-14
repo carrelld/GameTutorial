@@ -17,7 +17,7 @@ public class Player extends GameObject {
 		
 	
 	}
-
+	
 	public void tick() {
 		x += velX;
 		y += velY;
@@ -27,6 +27,7 @@ public class Player extends GameObject {
 		
 		collision();
 		
+		handler.addObject(new Trail(x, y, ID.Trail, Color.white, 32, 32, 0.08f, handler));
 	}
 
 	private void collision(){
