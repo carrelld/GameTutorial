@@ -32,7 +32,7 @@ public class Trail extends GameObject{
 
 		if(alpha > life){
 			alpha -= life;
-		} else handler.removeObject(this);
+		} else this.removed = true;
 		
 	}
 

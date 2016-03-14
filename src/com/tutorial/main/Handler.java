@@ -1,25 +1,38 @@
 package com.tutorial.main;
 
 import java.awt.Graphics;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
 	
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
+	LinkedList<GameObject> toAdd = new LinkedList<GameObject>();
 	
 	public void tick(){
+		// Will declaring this inside of the loop make it clear after each call to tick()?
+		ArrayList<Integer> toRemoveIndex = new ArrayList<Integer>();
 		
-		for(int i = 0; i < object.size(); i++){
-			GameObject tempObject = object.get(i);
+		// Update Objects
+		for(GameObject tempObject : object){
 			tempObject.tick();
+			
+			// Save index of array objects to be removed
+			if (tempObject.removed) {
+				toRemoveIndex.add(object.indexOf(tempObject));
+			}
 		}
-		// had to remove enhanced for loop when I started creating a trail for basic enemy
-//		for(GameObject tempObject : object){
-//			tempObject.tick();
-//		}
+	
+		// Remove marked objects
+		for (int index = toRemoveIndex.size() - 1; index >= 0; index--) {
+			this.removeObject(object.get(toRemoveIndex.get(index)));
+		}
+		// toRemoveIndex.clear(); //doesn't seem to be doing anything
 		
-		// test comment
+		
+		// Combine new objects into object list
+		this.object.addAll(toAdd);
+		this.toAdd.clear();
 	}
 	
 	public void render(Graphics g){
@@ -29,10 +42,10 @@ public class Handler {
 	}
 	
 	public void addObject(GameObject object){
-		this.object.add(object);
+		this.toAdd.add(object);
 	}
 	
 	public void removeObject(GameObject object){
-		this.removeObject(object);
+		this.object.remove(object);
 	}
 }
