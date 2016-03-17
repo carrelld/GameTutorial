@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-public class Trail extends GameObject{
+public class Trail extends GameObject {
 
 	private float alpha = 1;
 	private float life;
@@ -30,9 +30,11 @@ public class Trail extends GameObject{
 
 	public void tick() {
 
-		if(alpha > life){
+		if (alpha > life) {
 			alpha -= life;
-		} else this.removed = true;
+		} else {
+			handler.removeObject(this);
+		}
 		
 	}
 
@@ -47,7 +49,7 @@ public class Trail extends GameObject{
 		
 	}
 
-	private AlphaComposite makeTransparent(float alpha){
+	private AlphaComposite makeTransparent(float alpha) {
 		int type = AlphaComposite.SRC_OVER;
 		return(AlphaComposite.getInstance(type, alpha));
 	}

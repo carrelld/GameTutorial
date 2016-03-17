@@ -13,9 +13,6 @@ public class Player extends GameObject {
 	public Player(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
-		
-		
-	
 	}
 	
 	public void tick() {
@@ -27,14 +24,14 @@ public class Player extends GameObject {
 		
 		collision();
 		
-		handler.addObject(new Trail(x, y, ID.Trail, Color.white, 32, 32, 0.08f, handler));
+		handler.addObject(new Trail(x, y, ID.TRAIL, Color.white, 32, 32, 0.08f, handler));
 	}
 
-	private void collision(){
-		for(GameObject o : handler.object){
+	private void collision() {
+		for (GameObject o : handler.object) {
 			
-			if(o.getId() == ID.BasicEnemy){
-				if(getBounds().intersects(o.getBounds())){
+			if (o.getId() == ID.BASICENEMY) {
+				if (getBounds().intersects(o.getBounds())){
 					// Collision code
 					HUD.HEALTH -= 2;
 				}

@@ -22,8 +22,9 @@ public class Game extends Canvas implements Runnable{
 	private Random r;
 	private Handler handler;
 	private HUD hud;
+	private Spawn spawner;
 	
-	public Game(){
+	public Game() {
 		
 		handler = new Handler();
 		this.addKeyListener(new KeyInput(handler));
@@ -31,36 +32,30 @@ public class Game extends Canvas implements Runnable{
 		new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
 		
 		hud = new HUD();
+		spawner = new Spawn(handler, hud);
 		
 		r = new Random();
 		
-		handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
-		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-
-	
+		handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.PLAYER, handler));
+		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BASICENEMY, handler));
 	}
 	
-	public synchronized void start(){
+	public synchronized void start() {
 		thread = new Thread(this);
 		thread.start();
 		running = true;
 	}
 	
-	public synchronized void stop(){
-		try{
+	public synchronized void stop() {
+		try {
 			thread.join();
 			running = false;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void run(){
+	public void run() {
 		// Game loop
 		this.requestFocus();
 		long lastTime = System.nanoTime();
@@ -69,21 +64,21 @@ public class Game extends Canvas implements Runnable{
 		double delta = 0;
 		long timer = System.currentTimeMillis();
 		int frames = 0;
-		while(running){
+		while(running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while(delta >= 1){
+			while (delta >= 1) {
 				tick();
 				delta--;
 			}
-			if(running)
+			if (running)
 			{
 				render();
 			}
 			frames++;
 			
-			if(System.currentTimeMillis() - timer > 1000){
+			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println("FPS: " + frames);;
 				frames = 0;
@@ -92,14 +87,14 @@ public class Game extends Canvas implements Runnable{
 		stop();
 	}
 	
-	private void tick(){
+	private void tick() {
 		handler.tick();
 		hud.tick();
 	}
 	
-	private void render(){
+	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
-		if(bs == null){
+		if (bs == null) {
 			this.createBufferStrategy(3);
 			return;
 		}
@@ -115,14 +110,12 @@ public class Game extends Canvas implements Runnable{
 		
 		g.dispose();
 		bs.show();
-		
-		
 	}
 	
-	public static int clamp(int var, int min, int max){
-		if(var >= max)
+	public static int clamp(int var, int min, int max) {
+		if (var >= max)
 			return var = max;
-		else if(var <= min)
+		else if (var <= min)
 			return var = min;
 		else
 			return var;
