@@ -35,4 +35,19 @@ public class HUD {
 	
 	}
 	
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public int getScore() {
+		return this.score;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	public int getLevel() {
+		return this.level;
+	}
 }
